@@ -71,6 +71,7 @@ $ polydown models -c decorative -f folder -s 1k
 -it, --iters      amount of iterations.
 -t, --tone        Download 8K Tonemapped JPG (only HDRIs).
 -ff, --fileformat file format for hdris (hdr, exr).
+-sm, --skipmd5    Skip MD5 hash checks.
 -v, --version     show program's version number and exit
 ```
 
