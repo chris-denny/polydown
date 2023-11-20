@@ -86,7 +86,3 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
-runme.bat
-clients.bat
-personal.bat
-cg_assets.bat
