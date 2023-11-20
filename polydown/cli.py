@@ -17,6 +17,7 @@ def polycli(args):
     iters = args.iters
     tone = args.tone
     fileformat = args.fileformat
+    skipmd5 = args.skipmd5
     s = requests.Session()
 
     # ->🔒asset type->
@@ -87,4 +88,5 @@ def polycli(args):
         iters,
         tone,
         fileformat,
+        skipmd5,
     )

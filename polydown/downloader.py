@@ -16,6 +16,7 @@ class Downloader:
         overwrite,
         tone,
         file_format,
+        skipmd5,
         # --
         url=None,
         md5=None,
@@ -30,6 +31,7 @@ class Downloader:
         self.overwrite = overwrite
         self.tone = tone
         self.file_format = file_format
+        self.skipmd5 = skipmd5
         self.md5 = md5
         self.url = url
         self.subfolder = subfolder
@@ -85,8 +87,12 @@ class Downloader:
             self.b,
         )
         if self.filename in self.filelist and self.overwrite == False:
-            h = hash_check(*args)
-            h_result = theme.md5v if h == True else theme.md5x
+            if not self.skipmd5:
+                h = hash_check(*args)
+                h_result = theme.md5v if h == True else theme.md5x
+            else:
+                h = None
+                h_result = " (MD5 Ignored)"
             return (
                 theme.t_skipped + ("🔰" if self.b else "  ") + self.filename + h_result,
                 "exist",
@@ -95,8 +101,12 @@ class Downloader:
         else:
             save_file()
             ow = self.filename in self.filelist and self.overwrite
-            h = hash_check(*args)
-            h_result = theme.md5v if h == True else theme.md5x
+            if not self.skipmd5:
+                h = hash_check(*args)
+                h_result = theme.md5v if h == True else theme.md5x
+            else:
+                h = None
+                h_result = " (MD5 Ignored)"
             return (
                 (theme.t_down_ow if ow else theme.t_down)
                 + ("🔰" if self.b else "  ")
@@ -105,6 +115,7 @@ class Downloader:
                 ("downloaded_ow" if ow else "downloaded"),
                 h,
             )
+
 
     def img(self):
         if self.type == "hdris":

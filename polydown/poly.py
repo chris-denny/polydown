@@ -19,6 +19,7 @@ class Poly:
         iters,
         tone,
         file_format,
+        skipmd5,
     ):
         self.s = session
         self.type = type
@@ -34,6 +35,7 @@ class Poly:
         self.iters = iters
         self.tone = tone
         self.file_format = file_format
+        self.skipmd5 = skipmd5
 
         self.corrupted_files = []
         self.exist_files = 0
@@ -88,6 +90,7 @@ class Poly:
                         self.overwrite,
                         self.tone,
                         self.file_format,
+                        self.skipmd5,
                         bl_url,
                         bl_md5,
                         k,
@@ -114,6 +117,7 @@ class Poly:
                             self.overwrite,
                             self.tone,
                             self.file_format,
+                            self.skipmd5,
                             url,
                             md5,
                             k,
@@ -164,6 +168,7 @@ class Poly:
                         self.overwrite,
                         self.tone,
                         self.file_format,
+                        self.skipmd5,
                         url,
                         md5,
                     )

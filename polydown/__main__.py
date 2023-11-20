@@ -70,6 +70,14 @@ ap.add_argument(
     default=False,
     help="Do not download 'preview, render, thumbnail...' images.",
 )
+ap.add_argument(
+    "-sm",
+    "--skipmd5",
+    action="store_true",
+    default=False,
+    help="Skip MD5 hash checks.",
+)
+
 ap.add_argument("-v", "--version", action="version", version="%(prog)s v" + __version__)
 args = ap.parse_args()
 
