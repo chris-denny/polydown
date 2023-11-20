@@ -148,31 +148,36 @@ class Poly:
             )
             print(theme.t_file)
 
+            dw = None
             for k in file_sizes_list if self.down_sizes == [] else self.down_sizes:
-                url = file_js["hdri"][k][self.file_format]["url"]
-                md5 = file_js["hdri"][k][self.file_format]["md5"]
-                filename = url.split("/")[-1]
-                args = (
-                    self.type,
-                    asset,
-                    self.s,
-                    self.down_folder,
-                    None,
-                    filename,
-                    self.overwrite,
-                    self.tone,
-                    self.file_format,
-                    url,
-                    md5,
-                )
-                dw = Downloader(*args)
-                d = dw.file()
+                try:
+                    url = file_js["hdri"][k][self.file_format]["url"]
+                    md5 = file_js["hdri"][k][self.file_format]["md5"]
+                    filename = url.split("/")[-1]
+                    args = (
+                        self.type,
+                        asset,
+                        self.s,
+                        self.down_folder,
+                        None,
+                        filename,
+                        self.overwrite,
+                        self.tone,
+                        self.file_format,
+                        url,
+                        md5,
+                    )
+                    dw = Downloader(*args)
+                    d = dw.file()
+                except KeyError:
+                    print(f"{k} is not available")
+                    continue
                 print(d[0])
                 self.report.add(d[1])
                 if d[2] == False:
                     self.corrupted_files.append(filename)
 
-            if self.noimgs != True:
+            if self.noimgs != True and dw is not None:
                 dw.img()
 
             count += 1
