@@ -4,6 +4,7 @@ t_img = "[grey11 on dark_khaki]🖼️:[/grey11 on dark_khaki]"
 t_skipped = "[on grey50] ↳ [/on grey50][grey50]"
 t_down = "[grey11 on cyan] ↓ [/grey11 on cyan][cyan]"
 t_down_ow = "[grey11 on cyan] ⤓ [/grey11 on cyan][cyan]"
+t_unavailable = "❌   "
 
 t_skipped_img = "[on grey50] ↳ [/on grey50][grey50]  "
 t_down_img = "[grey11 on cyan] ↓ [/grey11 on cyan][cyan]  "

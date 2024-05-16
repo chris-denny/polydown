@@ -175,7 +175,7 @@ class Poly:
                     dw = Downloader(*args)
                     d = dw.file()
                 except KeyError:
-                    print(f"{k} is not available")
+                    print(f"{theme.t_unavailable}{k} is not available")
                     continue
                 print(d[0])
                 self.report.add(d[1])
