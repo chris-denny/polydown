@@ -61,9 +61,10 @@ class Poly:
                 self.subfolder = self.down_folder + asset
                 if not os.path.exists(self.subfolder):
                     os.mkdir(self.subfolder)
-                if not os.path.exists(self.subfolder + f"/{asset}_{k}"):
-                    os.mkdir(self.subfolder + f"/{asset}_{k}")
-                    os.mkdir(self.subfolder + f"/{asset}_{k}/textures")
+                if self.type != "textures":
+                    if not os.path.exists(self.subfolder + f"/{asset}_{k}"):
+                        os.mkdir(self.subfolder + f"/{asset}_{k}")
+                        os.mkdir(self.subfolder + f"/{asset}_{k}/textures")
 
             print(
                 theme.t_atitle
@@ -75,33 +76,37 @@ class Poly:
             for k in k_list if self.down_sizes == [] else self.down_sizes:
                 if k in k_list:
                     include = file_js["blend"][k]["blend"]["include"]
-                    # download blend file
                     create_subfolder(k)
-                    bl_url = file_js["blend"][k]["blend"]["url"]
-                    bl_md5 = file_js["blend"][k]["blend"]["md5"]
-                    filename = bl_url.split("/")[-1]
-                    args = (
-                        self.type,
-                        asset,
-                        self.s,
-                        self.down_folder,
-                        self.subfolder,
-                        filename,
-                        self.overwrite,
-                        self.tone,
-                        self.file_format,
-                        self.skipmd5,
-                        bl_url,
-                        bl_md5,
-                        k,
-                        True,
-                    )
-                    dw = Downloader(*args)
-                    d = dw.file()
-                    print(d[0])
-                    self.report.add(d[1])
-                    if d[2] == False:
-                        self.corrupted_files.append(filename)
+                    
+                    # Skip downloading .blend file for textures
+                    if self.type != "textures":
+                        # download blend file
+                        bl_url = file_js["blend"][k]["blend"]["url"]
+                        bl_md5 = file_js["blend"][k]["blend"]["md5"]
+                        filename = bl_url.split("/")[-1]
+                        args = (
+                            self.type,
+                            asset,
+                            self.s,
+                            self.down_folder,
+                            self.subfolder,
+                            filename,
+                            self.overwrite,
+                            self.tone,
+                            self.file_format,
+                            self.skipmd5,
+                            bl_url,
+                            bl_md5,
+                            k,
+                            True,
+                        )
+                        dw = Downloader(*args)
+                        d = dw.file()
+                        print(d[0])
+                        self.report.add(d[1])
+                        if d[2] == False:
+                            self.corrupted_files.append(filename)
+
                     # download texture files
                     for i in include:
                         url = include[i]["url"]

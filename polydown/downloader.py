@@ -50,6 +50,8 @@ class Downloader:
                 if not b
                 else f"{asset_k_folder}/{self.filename}"
             )
+        elif type == "textures":
+            self.folder = f"{subfolder}/{self.filename}"
         else:
             self.folder = (
                 f"{textures_folder}/{self.filename}"
@@ -63,12 +65,20 @@ class Downloader:
                 for entry in os.scandir(path=down_folder)
                 if entry.is_file() and entry.name.endswith((".hdr", ".exr", ".png"))
             ]
+        elif type == "textures":
+            self.filelist = [
+                entry.name
+                for entry in os.scandir(path=subfolder)
+                if entry.is_file()
+            ]
         else:
-            self.filelist = (
-                [t.name for t in os.scandir(path=textures_folder) if t.is_file()]
-                + [bl.name for bl in os.scandir(path=asset_k_folder) if bl.is_file()]
-                + [pr.name for pr in os.scandir(path=subfolder) if pr.is_file()]
-            )
+            self.filelist = []
+            if os.path.exists(textures_folder):
+                self.filelist.extend([t.name for t in os.scandir(path=textures_folder) if t.is_file()])
+            if os.path.exists(asset_k_folder):
+                self.filelist.extend([bl.name for bl in os.scandir(path=asset_k_folder) if bl.is_file()])
+            if os.path.exists(subfolder):
+                self.filelist.extend([pr.name for pr in os.scandir(path=subfolder) if pr.is_file()])
 
     def file(self):
         def save_file():
@@ -127,9 +137,7 @@ class Downloader:
             }
         elif self.type == "textures":
             imgs_dict = {
-                "primary": f"https://cdn.polyhaven.com/asset_img/primary/{self.asset}.png",
                 "thumb": f"https://cdn.polyhaven.com/asset_img/thumbs/{self.asset}.png",
-                "renders_clay": f"https://cdn.polyhaven.com/asset_img/renders/{self.asset}/clay.png",
             }
         elif self.type == "models":
             imgs_dict = {
