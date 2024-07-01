@@ -27,6 +27,7 @@ class Poly:
         if category != None:
             self.asset_url = f"https://api.polyhaven.com/assets?t={type}&c={category}"
         self.asset_list = [i for i in json.loads(self.s.get(self.asset_url).content)]
+        # self.asset_list.sort(reverse=True)
 
         self.down_folder = down_folder
         self.down_sizes = sizes
@@ -110,6 +111,15 @@ class Poly:
                     # download texture files
                     for i in include:
                         url = include[i]["url"]
+                        if url.endswith("png"):
+                            if any(property not in url.lower() for property in ["_diff_", "_diffuse_", "_albedo_", "_basecolor_"]):
+                                print(f"Grabbing EXR of {url.split('/')[-1]}")
+                                url = url[:-3] + "exr"
+                                url = url.replace("/png/", "/exr/")
+                            else:
+                                print(f"Grabbing JPG of {url.split('/')[-1]}")
+                                url = url[:-3] + "jpg"
+                                url = url.replace("/png/", "/jpg/")
                         md5 = include[i]["md5"]
                         filename = url.split("/")[-1]
                         args = (
