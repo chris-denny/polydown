@@ -1,0 +1,1 @@
+polydown hdris -f "W:\_Lighting\HDRIHaven\HDR" -sm -ff exr -s 4k 6k 8k 10k 12k 14k 16k 18k 19k 20k 21k 22k 23k 24k
